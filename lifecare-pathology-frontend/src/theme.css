@@ -97,3 +97,24 @@ body {
     justify-content: center;
     font-size: 20px;
 }
+@media (max-width: 991.98px) {
+    .navbar .navbar-collapse {
+        display: none;
+        width: 100%;
+    }
+
+    .navbar .navbar-collapse.show {
+        display: block !important;
+    }
+
+    .navbar .navbar-nav {
+        margin-left: 0 !important;
+        margin-top: 15px;
+    }
+
+    .navbar .navbar-collapse > .d-flex {
+        margin-top: 10px;
+        padding-bottom: 10px;
+        flex-wrap: wrap;
+    }
+}

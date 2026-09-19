@@ -33,3 +33,5 @@ build/
 .vscode/
 # Environment-specific configuration
 src/main/resources/application.properties
+# Docker secrets
+.env
