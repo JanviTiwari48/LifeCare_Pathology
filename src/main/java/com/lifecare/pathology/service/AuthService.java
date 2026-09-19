@@ -51,14 +51,16 @@ public class AuthService {
                 .role(role)
                 .build();
         user = userRepository.save(user);
-
+        Long patientId = null;   // ADD
         if (role == Role.PATIENT) {
             Patient patient = Patient.builder()
                     .user(user)
                     .phone(request.getPhone())
                     .address(request.getAddress())
                     .build();
-            patientRepository.save(patient);
+
+            patient = patientRepository.save(patient);   // CHANGED — capture return value
+            patientId = patient.getId();
         }
 
         String token = jwtUtil.generateToken(user.getEmail(), user.getRole().name());
@@ -68,6 +70,7 @@ public class AuthService {
                 .name(user.getName())
                 .email(user.getEmail())
                 .role(user.getRole().name())
+                .patientId(patientId)
                 .build();
     }
 
@@ -82,7 +85,12 @@ public class AuthService {
 
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new BadCredentialsException("Invalid email or password"));
-
+        Long patientId = null;   // ADD
+        if (user.getRole() == Role.PATIENT) {   // ADD
+            patientId = patientRepository.findByUserId(user.getId())
+                    .map(Patient::getId)
+                    .orElse(null);
+        }
         String token = jwtUtil.generateToken(user.getEmail(), user.getRole().name());
 
         return AuthResponse.builder()
@@ -90,6 +98,7 @@ public class AuthService {
                 .name(user.getName())
                 .email(user.getEmail())
                 .role(user.getRole().name())
+                .patientId(patientId)
                 .build();
     }
 }

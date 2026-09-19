@@ -8,4 +8,5 @@ public class AuthResponse {
     private String name;
     private String email;
     private String role;
+    private Long patientId;   // ADD THIS — null for LAB_TECHNICIAN
 }
