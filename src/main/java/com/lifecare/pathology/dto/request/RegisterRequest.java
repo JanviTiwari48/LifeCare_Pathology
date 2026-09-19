@@ -17,11 +17,6 @@ public class RegisterRequest {
     @Size(min = 6, message = "Password must be at least 6 characters")
     private String password;
 
-    @NotBlank(message = "Role is required")
-    @Pattern(regexp = "PATIENT|LAB_TECHNICIAN", message = "Role must be PATIENT or LAB_TECHNICIAN")
-    private String role;
-
-    // Only used when role = PATIENT; ignored otherwise
     private String phone;
     private String address;
 }

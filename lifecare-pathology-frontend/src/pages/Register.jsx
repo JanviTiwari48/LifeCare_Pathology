@@ -5,8 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import Navbar from '../components/Navbar';
 
 function Register() {
-    const [form, setForm] = useState({ name: '', email: '', password: '', role: 'PATIENT', phone: '', address: '' });
-    const [error, setError] = useState('');
+    const [form, setForm] = useState({ name: '', email: '', password: '', phone: '', address: '' });    const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const { login } = useAuth();
@@ -20,7 +19,7 @@ function Register() {
         try {
             const res = await api.post('/auth/register', form);
             login(res.data);
-            navigate(res.data.role === 'PATIENT' ? '/patient' : '/lab');
+            navigate('/patient');
         } catch (err) {
             setError(err.response?.data?.message || 'Registration failed');
         } finally {
@@ -54,25 +53,26 @@ function Register() {
                             <label className="form-label" style={{ fontSize: '14.5px' }}>Password</label>
                             <input type="password" className="form-control" name="password" value={form.password} onChange={handleChange} required minLength={6} />
                         </div>
+
                         <div className="mb-3">
-                            <label className="form-label" style={{ fontSize: '14.5px' }}>Role</label>
-                            <select className="form-select" name="role" value={form.role} onChange={handleChange}>
-                                <option value="PATIENT">Patient</option>
-                                <option value="LAB_TECHNICIAN">Lab Technician</option>
-                            </select>
+                            <label className="form-label" style={{ fontSize: '14.5px' }}>Phone</label>
+                            <input
+                                className="form-control"
+                                name="phone"
+                                value={form.phone}
+                                onChange={handleChange}
+                            />
                         </div>
-                        {form.role === 'PATIENT' && (
-                            <>
-                                <div className="mb-3">
-                                    <label className="form-label" style={{ fontSize: '14.5px' }}>Phone</label>
-                                    <input className="form-control" name="phone" value={form.phone} onChange={handleChange} />
-                                </div>
-                                <div className="mb-4">
-                                    <label className="form-label" style={{ fontSize: '14.5px' }}>Address</label>
-                                    <input className="form-control" name="address" value={form.address} onChange={handleChange} />
-                                </div>
-                            </>
-                        )}
+
+                        <div className="mb-4">
+                            <label className="form-label" style={{ fontSize: '14.5px' }}>Address</label>
+                            <input
+                                className="form-control"
+                                name="address"
+                                value={form.address}
+                                onChange={handleChange}
+                            />
+                        </div>
                         <button className="btn btn-brand w-100" disabled={loading}>
                             {loading ? 'Registering...' : 'Register'}
                         </button>

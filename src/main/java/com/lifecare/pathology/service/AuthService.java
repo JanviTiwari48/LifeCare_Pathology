@@ -42,7 +42,7 @@ public class AuthService {
             throw new DuplicateResourceException("Email already registered: " + request.getEmail());
         }
 
-        Role role = Role.valueOf(request.getRole());
+        Role role = Role.PATIENT;
 
         User user = User.builder()
                 .name(request.getName())
@@ -75,6 +75,7 @@ public class AuthService {
     }
 
     public AuthResponse login(LoginRequest request) {
+
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
