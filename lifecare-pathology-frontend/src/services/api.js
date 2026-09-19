@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: '/api'
+    baseURL: 'https://lifecare-pathology-ksk9.onrender.com/api'
 });
 
 api.interceptors.request.use((config) => {
